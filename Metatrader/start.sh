@@ -59,7 +59,7 @@ else
     show_message "[2/7] File $mt5file is not installed. Installing..."
 
     # Set Windows 10 mode in Wine and download and install MT5
-    $wine_executable reg add "HKEY_CURRENT_USER\\Software\\Wine" /v Version /t REG_SZ /d "win11" /f
+    $wine_executable reg add "HKEY_CURRENT_USER\\Software\\Wine" /v Version /t REG_SZ /d "win10" /f
     show_message "[3/7] Downloading MT5 installer..."
     curl -o /config/.wine/drive_c/mt5setup.exe $mt5setup_url
     show_message "[3/7] Installing MetaTrader 5..."
