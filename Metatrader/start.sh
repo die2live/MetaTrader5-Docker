@@ -8,7 +8,7 @@ wine_executable="wine"
 metatrader_version="5.0.36"
 mt5server_port="8001"
 MT5_CMD_OPTIONS="${MT5_CMD_OPTIONS:-}"
-mono_url="https://dl.winehq.org/wine/wine-mono/10.3.0/wine-mono-10.3.0-x86.msi"
+mono_url="https://dl.winehq.org/wine/wine-mono/11.0.0/wine-mono-11.0.0-x86.msi"
 python_url="https://www.python.org/ftp/python/3.9.13/python-3.9.13.exe"
 mt5setup_url="https://download.mql5.com/cdn/web/metaquotes.software.corp/mt5/mt5setup.exe"
 
@@ -59,7 +59,7 @@ else
     show_message "[2/7] File $mt5file is not installed. Installing..."
 
     # Set Windows 10 mode in Wine and download and install MT5
-    $wine_executable reg add "HKEY_CURRENT_USER\\Software\\Wine" /v Version /t REG_SZ /d "win10" /f
+    $wine_executable reg add "HKEY_CURRENT_USER\\Software\\Wine" /v Version /t REG_SZ /d "win11" /f
     show_message "[3/7] Downloading MT5 installer..."
     curl -o /config/.wine/drive_c/mt5setup.exe $mt5setup_url
     show_message "[3/7] Installing MetaTrader 5..."
@@ -99,7 +99,7 @@ fi
 # Install mt5linux library in Windows if not installed
 show_message "[6/7] Checking and installing mt5linux library in Windows if necessary"
 if ! is_wine_python_package_installed "mt5linux"; then
-    $wine_executable python -m pip install --no-cache-dir "mt5linux>=0.1.9"
+    $wine_executable python -m pip install --no-cache-dir "mt5linux>=1.0.3"
 fi
 
 # Install python-dateutil if needed (datetime is built-in, but dateutil adds features)
