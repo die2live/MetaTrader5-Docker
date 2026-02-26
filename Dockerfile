@@ -27,6 +27,7 @@ RUN apt-get update \
     && dpkg --add-architecture i386 \
     && apt-get update \
     && apt-get install --install-recommends -y winehq-stable \
+    && apt-get install winetricks -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /etc/apt/keyrings/winehq-archive.key
 
