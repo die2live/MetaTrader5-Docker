@@ -12,6 +12,7 @@ ENV WINEDEBUG=-all
 
 # Install all packages in a single layer to reduce image size
 RUN apt-get update \
+    && apt-get upgrade -y \
     && apt-get install -y --no-install-recommends \
     python3 \
     python3-pip \
@@ -19,17 +20,15 @@ RUN apt-get update \
     wget \
     curl \
     gnupg2 \
+    bc \
     software-properties-common \
     ca-certificates \
-    && mkdir -pm755 /etc/apt/keyrings \
-    && wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key \
-    && wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/debian/dists/bookworm/winehq-bookworm.sources \
     && dpkg --add-architecture i386 \
+    && mkdir -pm755 /etc/apt/keyrings \
+    && wget -O - https://dl.winehq.org/wine-builds/winehq.key | gpg --dearmor -o /etc/apt/keyrings/winehq-archive.key - \
+    && wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/debian/dists/bookworm/winehq-bookworm.sources \
     && apt-get update \
-    && apt-get install --install-recommends -y winehq-stable \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /etc/apt/keyrings/winehq-archive.key
-
+    && apt-get install --install-recommends -y winehq-staging
 
 COPY /Metatrader /Metatrader
 RUN chmod +x /Metatrader/start.sh
