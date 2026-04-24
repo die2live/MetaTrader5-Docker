@@ -7,7 +7,7 @@ LABEL build_version="Metatrader Docker:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="gmartin"
 
 ENV TITLE=Metatrader5
-ENV WINEPREFIX="/config/.wine"
+ENV WINEPREFIX="/config/.mt5"
 ENV WINEDEBUG=-all
 
 # Install all packages in a single layer to reduce image size
@@ -21,6 +21,7 @@ RUN apt-get update \
     curl \
     gnupg2 \
     bc \
+    nano \
     software-properties-common \
     ca-certificates \
     && dpkg --add-architecture i386 \

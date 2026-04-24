@@ -20,10 +20,21 @@ curl $URL_WEBVIEW --output webview2.exe
 echo Set environment to Windows 11
 WINEPREFIX=~/.mt5 winecfg -v=win11
 
-echo Install WebView2 Runtime
-WINEPREFIX=~/.mt5 wine webview2.exe /silent /install
+if [ -e "/config/.webview_installed" ]; then
+    echo "WebView2 Runtime is already installed."
+else
+    echo "Install WebView2 Runtime"
+    WINEPREFIX=~/.mt5 wine webview2.exe /silent /install
+    touch /config/.webview_installed
+fi
 
-echo Install MetaTrader 5
-WINEPREFIX=~/.mt5 wine mt5setup.exe
+if [ -e "/config/.mt5/drive_c/Program Files/MetaTrader 5/terminal64.exe" ]; then
+    echo "MetaTrader 5 is already installed."
+else
+    echo "Install MetaTrader 5"
+    WINEPREFIX=~/.mt5 wine mt5setup.exe /auto
+fi
 
-echo All done!
+echo "All done!"
+
+wine "/config/.mt5/drive_c/Program Files/MetaTrader 5/terminal64.exe"
